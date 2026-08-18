@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import ProgressGlasses from './components/ProgressGlasses'
 import SegmentedControl from './components/SegmentedControl'
-import ToggleChips from './components/ToggleChips'
 import type { WizardStep } from './types/wine'
 
 interface StepDef {
@@ -20,6 +19,7 @@ const STEPS: StepDef[] = [
 export default function App() {
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [copied, setCopied] = useState(false)
+  const cardRef = useRef<HTMLDivElement>(null)
 
   // --- Form State ---
   // Identity
@@ -29,7 +29,7 @@ export default function App() {
   // Appearance
   const [clarity, setClarity] = useState('clear')
   const [colorIntensity, setColorIntensity] = useState('medium')
-  const [hue, setHue] = useState('ruby')
+  const [hue, setHue] = useState('')
 
   // Nose
   const [noseCondition, setNoseCondition] = useState('clean')
@@ -40,7 +40,6 @@ export default function App() {
   const [sweetness, setSweetness] = useState('dry')
   const [acidity, setAcidity] = useState('medium')
   const [body, setBody] = useState('medium')
-  const [otherTastes, setOtherTastes] = useState<string[]>([])
   const [mouthfeel, setMouthfeel] = useState('smooth')
   const [palateFlavours, setPalateFlavours] = useState('')
 
@@ -51,36 +50,41 @@ export default function App() {
   const [overallImpression, setOverallImpression] = useState('')
 
   // --- Handlers ---
-  const handleToggleTaste = (option: string) => {
-    setOtherTastes((prev) =>
-      prev.includes(option) ? prev.filter((i) => i !== option) : [...prev, option]
-    )
+  const goToStep = (index: number) => {
+    setCurrentStepIndex(index)
+    cardRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  // Generate formatted note text matching your template
-  const generatedNote = `WINE ${wineNumber}: ${wineName || 'Unnamed Wine'}
+  // --- Helper to build natural prose ---
+  const titleName = wineName ? `${wineName.trim()}` : `Wine #${wineNumber}`
 
-APPEARANCE
-- Clarity: The wine is ${clarity}.
-- Colour: This wine is ${colorIntensity} ${hue} in colour.
+  const aromaSentence = noseAromas.trim()
+    ? `The olfactory profile is characterized by notes of ${noseAromas.trim()}.`
+    : 'Aroma descriptors were not specified.'
 
-NOSE
-- Condition: The nose is ${noseCondition}.
-- Intensity: The aromas are ${noseIntensity} in intensity.
-- Descriptors: On the nose, this wine shows aromas of ${noseAromas || '[none specified]'}.
+  const flavourSentence = palateFlavours.trim()
+    ? `On the palate, it delivers distinct flavors of ${palateFlavours.trim()}.`
+    : 'Palate flavor descriptors were not specified.'
 
-PALATE
-- Sweetness: The wine is ${sweetness}.
-- Acidity: The acidity is ${acidity}.
-- Bitterness/saltiness/umami: ${otherTastes.length > 0 ? otherTastes.join(', ') : 'Not detected.'}
-- Mouthfeel: The wine has a ${body}-bodied texture that feels ${mouthfeel}.
-- Flavours: On the palate, flavours of ${palateFlavours || '[none specified]'} come through.
+  const impressionSentence = overallImpression.trim()
+    ? `In summary, ${overallImpression.trim()}`
+    : 'In summary, this wine demonstrates classic stylistic features for its category.'
 
-OVERALL / QUALITY
-- Complexity: ${complexity}
-- Length: The finish is ${finishLength}.
-- Balance: The wine is ${balance}.
-- Overall impression: ${overallImpression || 'N/A'}`
+  // Generates complete prose paragraphs like a formal written report
+  const generatedNote = `TASTING EVALUATION REPORT: ${titleName.toUpperCase()}
+Sample Reference: ID #${wineNumber}
+
+Visual Evaluation
+In the glass, the wine presents a ${clarity} appearance, displaying a ${colorIntensity} ${hue} colour. 
+
+Olfactory Profile
+On the nose, the condition is ${noseCondition} with a ${noseIntensity} aroma intensity. ${aromaSentence}
+
+Palate & Structural Analysis
+The palate opens with a ${sweetness} sweetness level and a ${acidity} acidity structure, framed by a ${body}-bodied mouthfeel that presents as ${mouthfeel}. ${flavourSentence}
+
+Synthesis & Quality Assessment
+Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finish. The component structures are ${balance}. ${impressionSentence}`
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(generatedNote)
@@ -100,10 +104,10 @@ OVERALL / QUALITY
       <ProgressGlasses
         steps={STEPS}
         currentIndex={currentStepIndex}
-        onSelect={(index) => setCurrentStepIndex(index)}
+        onSelect={(index) => goToStep(index)}
       />
 
-      <div className="step-card">
+      <div className="step-card" ref={cardRef}>
         <h2 className="step-title">{STEPS[currentStepIndex].label}</h2>
         <p className="step-subtitle">
           Step {currentStepIndex + 1} of {STEPS.length}
@@ -120,17 +124,6 @@ OVERALL / QUALITY
                 type="text"
                 value={wineNumber}
                 onChange={(e) => setWineNumber(e.target.value)}
-              />
-            </div>
-            <div className="field">
-              <label className="field-label" htmlFor="wine-name">Wine Name & Vintage</label>
-              <input
-                id="wine-name"
-                className="text-input"
-                type="text"
-                placeholder="e.g. 2021 Marlborough Sauvignon Blanc"
-                value={wineName}
-                onChange={(e) => setWineName(e.target.value)}
               />
             </div>
           </>
@@ -175,6 +168,18 @@ OVERALL / QUALITY
                 onChange={(e) => setHue(e.target.value)}
               />
             </div>
+            <img 
+              src='public/slides/colours.png' 
+              alt="Wine colours guide" 
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                maxHeight: '300px',
+                objectFit: 'contain',
+                borderRadius: '8px',
+                marginTop: '12px'
+              }} 
+            />
           </>
         )}
 
@@ -216,6 +221,18 @@ OVERALL / QUALITY
                 onChange={(e) => setNoseAromas(e.target.value)}
               />
             </div>
+            <img 
+              src='public/slides/descriptors.png' 
+              alt="Wine aroma descriptors guide" 
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                maxHeight: '300px',
+                objectFit: 'contain',
+                borderRadius: '8px',
+                marginTop: '12px'
+              }} 
+            />
           </>
         )}
 
@@ -263,14 +280,6 @@ OVERALL / QUALITY
               />
             </div>
             <div className="field">
-              <label className="field-label">Tastes & Sensations Detected</label>
-              <ToggleChips
-                options={['Bitterness', 'Saltiness', 'Umami', 'Astringency', 'Alcohol Heat']}
-                selected={otherTastes}
-                onToggle={handleToggleTaste}
-              />
-            </div>
-            <div className="field">
               <label className="field-label" htmlFor="mouthfeel">Mouthfeel Texture</label>
               <input
                 id="mouthfeel"
@@ -291,6 +300,18 @@ OVERALL / QUALITY
                 onChange={(e) => setPalateFlavours(e.target.value)}
               />
             </div>
+            <img 
+              src='public/slides/tasteguide.png' 
+              alt="Wine tastes guide" 
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                maxHeight: '300px',
+                objectFit: 'contain',
+                borderRadius: '8px',
+                marginTop: '12px'
+              }} 
+            />
           </>
         )}
 
@@ -351,11 +372,11 @@ OVERALL / QUALITY
 
             {/* Generated Template Output Preview */}
             <div className="review-meta">
-              <h3>Generated Note</h3>
+              <h3>Generated Written Report</h3>
               <div className="review-actions">
                 {copied && <span className="copy-feedback">Copied!</span>}
                 <button type="button" className="btn btn-secondary" onClick={copyToClipboard}>
-                  Copy Note
+                  Copy Report
                 </button>
               </div>
             </div>
@@ -366,6 +387,7 @@ OVERALL / QUALITY
               border: '1px solid var(--border)',
               whiteSpace: 'pre-wrap',
               fontSize: '13px',
+              lineHeight: '1.6',
               fontFamily: 'monospace'
             }}>
               {generatedNote}
@@ -378,7 +400,7 @@ OVERALL / QUALITY
           <button
             type="button"
             className="btn btn-secondary"
-            onClick={() => setCurrentStepIndex((prev) => Math.max(0, prev - 1))}
+            onClick={() => goToStep(Math.max(0, currentStepIndex - 1))}
             disabled={currentStepIndex === 0}
           >
             Back
@@ -386,7 +408,7 @@ OVERALL / QUALITY
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => setCurrentStepIndex((prev) => Math.min(STEPS.length - 1, prev + 1))}
+            onClick={() => goToStep(Math.min(STEPS.length - 1, currentStepIndex + 1))}
             disabled={currentStepIndex === STEPS.length - 1}
           >
             Next

@@ -55,11 +55,43 @@ export default function App() {
     cardRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const handleResetForm = () => {
+    // Reset Identity
+    setWineNumber('1')
+    setWineName('')
+
+    // Reset Appearance
+    setClarity('clear')
+    setColorIntensity('medium')
+    setHue('')
+
+    // Reset Nose
+    setNoseCondition('clean')
+    setNoseIntensity('medium')
+    setNoseAromas('')
+
+    // Reset Palate
+    setSweetness('dry')
+    setAcidity('medium')
+    setBody('medium')
+    setMouthfeel('smooth')
+    setPalateFlavours('')
+
+    // Reset Overall
+    setComplexity('moderately complex')
+    setFinishLength('medium')
+    setBalance('well-balanced')
+    setOverallImpression('')
+
+    // Jump back to Identity step
+    goToStep(0)
+  }
+
   // --- Helper to build natural prose ---
   const titleName = wineName ? `${wineName.trim()}` : `Wine #${wineNumber}`
 
   const aromaSentence = noseAromas.trim()
-    ? `The olfactory profile is characterized by notes of ${noseAromas.trim()}.`
+    ? `The smell of the wine is characterized by notes of ${noseAromas.trim()}.`
     : 'Aroma descriptors were not specified.'
 
   const flavourSentence = palateFlavours.trim()
@@ -78,10 +110,10 @@ Visual Evaluation
 In the glass, the wine presents a ${clarity} appearance, displaying a ${colorIntensity} ${hue} colour. 
 
 Olfactory Profile
-On the nose, the condition is ${noseCondition} with a ${noseIntensity} aroma intensity. ${aromaSentence}
+On the nose, the wine smells ${noseCondition} with a ${noseIntensity} aroma intensity. ${aromaSentence}
 
 Palate & Structural Analysis
-The palate opens with a ${sweetness} sweetness level and a ${acidity} acidity structure, framed by a ${body}-bodied mouthfeel that presents as ${mouthfeel}. ${flavourSentence}
+The palate opens with a ${sweetness} sweetness level and a ${acidity} acidity, with a ${body}-bodied mouthfeel that presents as ${mouthfeel}. ${flavourSentence}
 
 Synthesis & Quality Assessment
 Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finish. The component structures are ${balance}. ${impressionSentence}`
@@ -124,6 +156,17 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
                 type="text"
                 value={wineNumber}
                 onChange={(e) => setWineNumber(e.target.value)}
+              />
+            </div>
+            <div className="field">
+              <label className="field-label" htmlFor="wine-name">Wine Name (Optional)</label>
+              <input
+                id="wine-name"
+                className="text-input"
+                type="text"
+                placeholder="e.g. Marlborough Sauvignon Blanc 2023"
+                value={wineName}
+                onChange={(e) => setWineName(e.target.value)}
               />
             </div>
           </>
@@ -392,6 +435,15 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
             }}>
               {generatedNote}
             </pre>
+
+            <button 
+              type="button" 
+              className="btn btn-secondary" 
+              onClick={handleResetForm}
+              style={{ width: '100%', marginTop: '16px' }}
+            >
+              + Start New Wine Evaluation
+            </button>
           </>
         )}
 

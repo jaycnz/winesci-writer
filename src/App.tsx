@@ -95,8 +95,8 @@ export default function App() {
     : 'Aroma descriptors were not specified.'
 
   const flavourSentence = palateFlavours.trim()
-    ? `On the palate, it delivers distinct flavors of ${palateFlavours.trim()}.`
-    : 'Palate flavor descriptors were not specified.'
+    ? `On the palate, it delivers distinct flavours of ${palateFlavours.trim()}.`
+    : 'Palate flavour descriptors were not specified.'
 
   const impressionSentence = overallImpression.trim()
     ? `In summary, ${overallImpression.trim()}`

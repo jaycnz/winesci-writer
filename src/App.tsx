@@ -43,6 +43,9 @@ export default function App() {
   const [mouthfeel, setMouthfeel] = useState('smooth')
   const [palateFlavours, setPalateFlavours] = useState('')
 
+  //Optional Tannins
+  const [tannins, setTannins] = useState('')
+
   // Overall
   const [complexity, setComplexity] = useState('moderately complex')
   const [finishLength, setFinishLength] = useState('medium')
@@ -69,6 +72,9 @@ export default function App() {
     setNoseCondition('clean')
     setNoseIntensity('medium')
     setNoseAromas('')
+
+    //reset Tannins
+    setTannins('')
 
     // Reset Palate
     setSweetness('dry')
@@ -102,6 +108,10 @@ export default function App() {
     ? `In summary, ${overallImpression.trim()}`
     : 'In summary, this wine demonstrates classic stylistic features for its category.'
 
+  const tanninSentence = tannins.trim()
+  ? ` Tannins are ${tannins.trim()}.`
+  : ''
+
   // Generates complete prose paragraphs like a formal written report
   const generatedNote = `TASTING EVALUATION REPORT: ${titleName.toUpperCase()}
 Sample Reference: ID #${wineNumber}
@@ -113,7 +123,7 @@ Olfactory Profile
 On the nose, the wine smells ${noseCondition} with a ${noseIntensity} aroma intensity. ${aromaSentence}
 
 Palate & Structural Analysis
-The palate opens with a ${sweetness} sweetness level and a ${acidity} acidity, with a ${body}-bodied mouthfeel that presents as ${mouthfeel}. ${flavourSentence}
+The palate opens with a ${sweetness} sweetness level and a ${acidity} acidity, with a ${body}-bodied mouthfeel that presents as ${mouthfeel}.${tanninSentence} ${flavourSentence}
 
 Synthesis & Quality Assessment
 Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finish. The component structures are ${balance}. ${impressionSentence}`
@@ -213,7 +223,19 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
             </div>
             <img 
               src='public/slides/colours.png' 
-              alt="Wine colours guide" 
+              alt="White Wine colours guide" 
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                maxHeight: '300px',
+                objectFit: 'contain',
+                borderRadius: '8px',
+                marginTop: '12px'
+              }} 
+            />
+            <img 
+              src='public/slides/Redwines/RedWineAppearance.png' 
+              alt="Red Wine colours guide" 
               style={{
                 maxWidth: '100%',
                 height: 'auto',
@@ -267,6 +289,18 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
             <img 
               src='public/slides/descriptors.png' 
               alt="Wine aroma descriptors guide" 
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                maxHeight: '300px',
+                objectFit: 'contain',
+                borderRadius: '8px',
+                marginTop: '12px'
+              }} 
+            />
+            <img 
+              src='public/slides/Redwines/RedDescriptors.png' 
+              alt="Red Wine descriptors guide" 
               style={{
                 maxWidth: '100%',
                 height: 'auto',
@@ -346,6 +380,42 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
             <img 
               src='public/slides/tasteguide.png' 
               alt="Wine tastes guide" 
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                maxHeight: '300px',
+                objectFit: 'contain',
+                borderRadius: '8px',
+                marginTop: '12px'
+              }} 
+            />
+            <img 
+              src='public/slides/RedWines/RedWinePalette.png' 
+              alt="Red Wine palette guide" 
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                maxHeight: '300px',
+                objectFit: 'contain',
+                borderRadius: '8px',
+                marginTop: '12px'
+              }} 
+            />
+
+            <div className="field">
+              <label className="field-label" htmlFor="tannins">Tannins (LEAVE BLANK IF N/A)</label>
+              <input
+                id="tannins"
+                className="text-input"
+                type="text"
+                placeholder="e.g. fine-grained, grippy, velvety, firm"
+                value={tannins}
+                onChange={(e) => setTannins(e.target.value)}
+              />
+            </div>
+            <img 
+              src='public/slides/RedWines/TanninDescriptors.png' 
+              alt="Red Wine palette guide" 
               style={{
                 maxWidth: '100%',
                 height: 'auto',

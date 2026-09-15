@@ -225,9 +225,9 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
               />
             </div>
             <img 
-              src='public/slides/colours.png' 
+              src='/slides/colours.png' 
               alt="White Wine colours guide" 
-              onClick={() => setLightboxImage({ src: 'public/slides/colours.png', alt: 'White Wine colours guide' })}
+              onClick={() => setLightboxImage({ src: '/slides/colours.png', alt: 'White Wine colours guide' })}
               style={{
                 maxWidth: '100%',
                 height: 'auto',
@@ -239,9 +239,9 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
               }} 
             />
             <img 
-              src='public/slides/Redwines/RedWineAppearance.png' 
+              src='/slides/RedWines/RedWineAppearance.png' 
               alt="Red Wine colours guide" 
-              onClick={() => setLightboxImage({ src: 'public/slides/Redwines/RedWineAppearance.png', alt: 'Red Wine colours guide' })}
+              onClick={() => setLightboxImage({ src: '/slides/RedWines/RedWineAppearance.png', alt: 'Red Wine colours guide' })}
               style={{
                 maxWidth: '100%',
                 height: 'auto',
@@ -294,9 +294,9 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
               />
             </div>
             <img 
-              src='public/slides/descriptors.png' 
+              src='/slides/descriptors.png' 
               alt="Wine aroma descriptors guide" 
-              onClick={() => setLightboxImage({ src: 'public/slides/descriptors.png', alt: 'White wine aroma descriptors guide' })}
+              onClick={() => setLightboxImage({ src: '/slides/descriptors.png', alt: 'White wine aroma descriptors guide' })}
               style={{
                 maxWidth: '100%',
                 height: 'auto',
@@ -308,9 +308,9 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
               }} 
             />
             <img 
-              src='public/slides/Redwines/RedDescriptors.png' 
+              src='/slides/RedWines/RedDescriptors.png' 
               alt="Red Wine descriptors guide" 
-              onClick={() => setLightboxImage({ src: 'public/slides/Redwines/RedDescriptors.png', alt: 'Red wine aroma descriptors guide' })}
+              onClick={() => setLightboxImage({ src: '/slides/RedWines/RedDescriptors.png', alt: 'Red wine aroma descriptors guide' })}
               style={{
                 maxWidth: '100%',
                 height: 'auto',
@@ -389,9 +389,9 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
               />
             </div>
             <img 
-              src='public/slides/tasteguide.png' 
+              src='/slides/tasteguide.png' 
               alt="White wine tastes guide"
-              onClick={() => setLightboxImage({ src: 'public/slides/tasteguide.png', alt: 'White wine tastes guide' })}
+              onClick={() => setLightboxImage({ src: '/slides/tasteguide.png', alt: 'White wine tastes guide' })}
               style={{
                 maxWidth: '100%',
                 height: 'auto',
@@ -403,9 +403,9 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
               }} 
             />
             <img 
-              src='public/slides/RedWines/RedWinePalette.png' 
+              src='/slides/RedWines/RedWinePalette.png' 
               alt="Red Wine palette guide" 
-              onClick={() => setLightboxImage({ src: 'public/slides/RedWines/RedWinePalette.png', alt: 'Red Wine palette guide' })}
+              onClick={() => setLightboxImage({ src: '/slides/RedWines/RedWinePalette.png', alt: 'Red Wine palette guide' })}
               style={{
                 maxWidth: '100%',
                 height: 'auto',
@@ -429,9 +429,9 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
               />
             </div>
             <img 
-              src='public/slides/RedWines/TanninDescriptors.png' 
+              src='/slides/RedWines/TanninDescriptors.png' 
               alt="Red Wine palette guide" 
-              onClick={() => setLightboxImage({ src: 'public/slides/RedWines/TanninDescriptors.png', alt: 'Red Wine palette guide' })}
+              onClick={() => setLightboxImage({ src: '/slides/RedWines/TanninDescriptors.png', alt: 'Red Wine palette guide' })}
               style={{
                 maxWidth: '100%',
                 height: 'auto',

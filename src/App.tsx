@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import ProgressGlasses from './components/ProgressGlasses'
 import SegmentedControl from './components/SegmentedControl'
 import type { WizardStep } from './types/wine'
+import ImageLightbox from './components/ImageLightbox'
 
 interface StepDef {
   key: WizardStep
@@ -20,6 +21,8 @@ export default function App() {
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [copied, setCopied] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
+
+  const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string } | null>(null)
 
   // --- Form State ---
   // Identity
@@ -224,25 +227,29 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
             <img 
               src='public/slides/colours.png' 
               alt="White Wine colours guide" 
+              onClick={() => setLightboxImage({ src: 'public/slides/colours.png', alt: 'White Wine colours guide' })}
               style={{
                 maxWidth: '100%',
                 height: 'auto',
                 maxHeight: '300px',
                 objectFit: 'contain',
                 borderRadius: '8px',
-                marginTop: '12px'
+                marginTop: '12px',
+                cursor: 'zoom-in'
               }} 
             />
             <img 
               src='public/slides/Redwines/RedWineAppearance.png' 
               alt="Red Wine colours guide" 
+              onClick={() => setLightboxImage({ src: 'public/slides/Redwines/RedWineAppearance.png', alt: 'Red Wine colours guide' })}
               style={{
                 maxWidth: '100%',
                 height: 'auto',
                 maxHeight: '300px',
                 objectFit: 'contain',
                 borderRadius: '8px',
-                marginTop: '12px'
+                marginTop: '12px',
+                cursor: 'zoom-in'
               }} 
             />
           </>
@@ -289,25 +296,29 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
             <img 
               src='public/slides/descriptors.png' 
               alt="Wine aroma descriptors guide" 
+              onClick={() => setLightboxImage({ src: 'public/slides/descriptors.png', alt: 'White wine aroma descriptors guide' })}
               style={{
                 maxWidth: '100%',
                 height: 'auto',
                 maxHeight: '300px',
                 objectFit: 'contain',
                 borderRadius: '8px',
-                marginTop: '12px'
+                marginTop: '12px',
+                cursor: 'zoom-in'
               }} 
             />
             <img 
               src='public/slides/Redwines/RedDescriptors.png' 
               alt="Red Wine descriptors guide" 
+              onClick={() => setLightboxImage({ src: 'public/slides/Redwines/RedDescriptors.png', alt: 'Red wine aroma descriptors guide' })}
               style={{
                 maxWidth: '100%',
                 height: 'auto',
                 maxHeight: '300px',
                 objectFit: 'contain',
                 borderRadius: '8px',
-                marginTop: '12px'
+                marginTop: '12px',
+                cursor: 'zoom-in'
               }} 
             />
           </>
@@ -379,26 +390,30 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
             </div>
             <img 
               src='public/slides/tasteguide.png' 
-              alt="Wine tastes guide" 
+              alt="White wine tastes guide"
+              onClick={() => setLightboxImage({ src: 'public/slides/tasteguide.png', alt: 'White wine tastes guide' })}
               style={{
                 maxWidth: '100%',
                 height: 'auto',
                 maxHeight: '300px',
                 objectFit: 'contain',
                 borderRadius: '8px',
-                marginTop: '12px'
+                marginTop: '12px',
+                cursor: 'zoom-in'
               }} 
             />
             <img 
               src='public/slides/RedWines/RedWinePalette.png' 
               alt="Red Wine palette guide" 
+              onClick={() => setLightboxImage({ src: 'public/slides/RedWines/RedWinePalette.png', alt: 'Red Wine palette guide' })}
               style={{
                 maxWidth: '100%',
                 height: 'auto',
                 maxHeight: '300px',
                 objectFit: 'contain',
                 borderRadius: '8px',
-                marginTop: '12px'
+                marginTop: '12px',
+                cursor: 'zoom-in'
               }} 
             />
 
@@ -416,13 +431,15 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
             <img 
               src='public/slides/RedWines/TanninDescriptors.png' 
               alt="Red Wine palette guide" 
+              onClick={() => setLightboxImage({ src: 'public/slides/RedWines/TanninDescriptors.png', alt: 'Red Wine palette guide' })}
               style={{
                 maxWidth: '100%',
                 height: 'auto',
                 maxHeight: '300px',
                 objectFit: 'contain',
                 borderRadius: '8px',
-                marginTop: '12px'
+                marginTop: '12px',
+                cursor: 'zoom-in'
               }} 
             />
           </>
@@ -537,6 +554,13 @@ Overall, this wine exhibits a ${complexity} profile with a ${finishLength} finis
           </button>
         </div>
       </div>
+      {lightboxImage && (
+        <ImageLightbox
+          src={lightboxImage.src}
+          alt={lightboxImage.alt}
+          onClose={() => setLightboxImage(null)}
+        />
+      )}
     </div>
   )
 }

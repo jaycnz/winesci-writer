@@ -109,3 +109,97 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.segmented {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.segmented-option {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--social-bg);
+  color: var(--text-h);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.segmented-option:hover {
+  box-shadow: var(--shadow);
+}
+
+.segmented-option.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.progress-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.progress-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--social-bg);
+  color: var(--text-h);
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  .progress-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transition: background-color 0.25s ease;
+  }
+
+  /* --- Completed Steps --- */
+  &.complete {
+    border-color: var(--garnet, #ac46ff);
+    background: var(--accent-bg, rgba(128, 0, 32, 0.1));
+
+    .progress-indicator {
+      background-color: var(--garnet, #ac46ff);
+    }
+  }
+
+  /* --- Current Step --- */
+  &.current {
+    border-color: var(--accent, #c579ff);
+    background: var(--accent, #c579ff);
+    color: #1a1a1a;
+    font-weight: 700;
+    box-shadow: 0 0 0 3px var(--accent, #c579ff), var(--shadow);
+    transform: scale(1.04);
+
+    .progress-indicator {
+      background-color: #1a1a1a;
+    }
+  }
+
+  /* --- Upcoming Steps --- */
+  &.upcoming {
+    opacity: 0.55;
+
+    .progress-indicator {
+      background-color: var(--border-strong, #ccc);
+    }
+  }
+
+  &:hover {
+    box-shadow: var(--shadow);
+  }
+}
